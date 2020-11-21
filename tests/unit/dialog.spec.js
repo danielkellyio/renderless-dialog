@@ -50,4 +50,41 @@ describe('dialog object', ()=>{
     })
     dialog.ok('of course!')
   })
+  
+  test('dialog options can be chained', (done)=>{
+    dialog
+    .title('Dialog title')
+    .html()
+    .okText('Delete')
+    .cancelText('Dont delete')
+    .inputType('autofill')
+    .prompt('Why are you deleting this thing>').then((userInput)=>{
+      expect(userInput).toBe('It stinks')
+      done()
+    })
+    expect(dialog.state.title).toBe('Dialog title')
+    expect(dialog.state.html).toBe(true)
+    expect(dialog.state.okText).toBe('Delete')
+    expect(dialog.state.cancelText).toBe('Dont delete')
+    expect(dialog.state.inputType).toBe('autofill')
+    dialog.ok('It stinks')
+  })
+  
+  test('dialog is reset on close', (done)=>{
+    dialog
+    .title('Dialog title')
+    .html()
+    .okText('Delete')
+    .cancelText('Dont delete')
+    .inputType('autofill')
+    .prompt('Why are you deleting this thing>').then((userInput)=>{
+      expect(dialog.state.title).toBe('')
+      expect(dialog.state.html).toBe(false)
+      expect(dialog.state.okText).toBe('Ok')
+      expect(dialog.state.cancelText).toBe('Cancel')
+      expect(dialog.state.inputType).toBe('text')
+      done()
+    })
+    dialog.ok('It stinks')
+  })
 })

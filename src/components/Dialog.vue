@@ -14,7 +14,7 @@
       </div>
 
     </div>
-    <div class="dialog-bg"></div>
+    <div class="dialog-bg" @click="dialog.cancel()"></div>
   </div>
 </template>
 
